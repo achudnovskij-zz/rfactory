@@ -1,25 +1,25 @@
-define([], function() {
+define([], function () {
 
   'use strict';
 
   var originalDefine = define,
     modulesRegistry = {},
     utility = {
-      isFunction : function(it) {
+      isFunction : function (it) {
         return Object.prototype.toString.call(it) === '[object Function]';
       },
 
-      isArray : function(it) {
+      isArray : function (it) {
         return Object.prototype.toString.call(it) === '[object Array]';
       }
     },
 
-    createWrappedCallback = function(originalCallback, originalDeps) {
+    createWrappedCallback = function (originalCallback, originalDeps) {
       if (!utility.isFunction(originalCallback)) {
         return originalCallback;
       }
 
-      return function() {
+      return function () {
         // module object is available as the last argument after 'module'
         // explicitly pushed to dependencies list
         var moduleObj = arguments[arguments.length - 1];
@@ -35,7 +35,7 @@ define([], function() {
       };
 
     },
-    defineOverride = function(name, deps, callback) {
+    defineOverride = function (name, deps, callback) {
       // standard requirejs params handling
       if (typeof name !== 'string') {
         callback = deps;
@@ -61,11 +61,12 @@ define([], function() {
     },
 
 
-    buildArgsArray = function(moduleObj, dependencyOverrides) {
+    buildArgsArray = function (moduleObj, dependencyOverrides) {
       var args = [],
-        isOverridesArray = utility.isArray(dependencyOverrides);
+        isOverridesArray = utility.isArray(dependencyOverrides),
+        i = 0;
 
-      for (var i = 0; i < moduleObj.depNames.length; i++) {
+      for (i; i < moduleObj.depNames.length; i = i + 1) {
         var key = moduleObj.depNames[i],
           override = dependencyOverrides[isOverridesArray ? i : key];
         args.push(override || moduleObj.depModules[i]);
@@ -77,16 +78,16 @@ define([], function() {
   var plugin = {
     load : function(name, req, onload, config) {
 
-      require([name], function() {
+      require([name], function () {
         var module = modulesRegistry[name];
         if (!module) {
           throw new Error('Module "' + name + '" is not registered.' +
             ' Please ensure that rinject plugin is loaded before any modules you try to resolve');
         }
-        var factory = function(dependencyOverrides) {
+        var factory = function (dependencyOverrides) {
           var args = buildArgsArray(module, dependencyOverrides);
           return module.factory.apply(this, args);
-        }
+        };
 
         onload(factory);
       });
