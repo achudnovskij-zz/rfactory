@@ -1,4 +1,6 @@
-﻿define([], function() {
+define([], function() {
+
+  'use strict';
 
   var originalDefine = define,
     modulesRegistry = {},
@@ -9,7 +11,7 @@
 
       isArray : function(it) {
         return Object.prototype.toString.call(it) === '[object Array]';
-      },
+      }
     },
 
     createWrappedCallback = function(originalCallback, originalDeps) {
@@ -28,9 +30,9 @@
           depNames : originalDeps,
           depModules : Array.prototype.slice.call(arguments, 0),
           factory : originalCallback
-        }
+        };
         return originalCallback.apply(this, arguments);
-      }
+      };
 
     },
     defineOverride = function(name, deps, callback) {
@@ -46,10 +48,10 @@
         deps = [];
       }
 
-      var wrappedCallback = createWrappedCallback(callback, deps);
+      var wrappedCallback = createWrappedCallback(callback, deps),
+        defineArgs = [];
       deps.push('module');
 
-      var defineArgs = [];
       if (name) {
         defineArgs.push(name);
       }
@@ -94,7 +96,7 @@
 
   // replace global define with override
   define = defineOverride;
-  define.amd = originalDefine.amd;  
+  define.amd = originalDefine.amd;
 
   return plugin;
 
