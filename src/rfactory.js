@@ -76,7 +76,7 @@ define([], function () {
 
 
   var plugin = {
-    load : function(name, req, onload, config) {
+    load : function (name, req, onload, config) {
 
       require([name], function () {
         var module = modulesRegistry[name];
