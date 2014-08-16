@@ -11,7 +11,7 @@ define([], function () {
 
       isArray : function (it) {
         return Object.prototype.toString.call(it) === '[object Array]';
-      }
+      },
     },
 
     createWrappedCallback = function (originalCallback, originalDeps) {
@@ -19,7 +19,7 @@ define([], function () {
         return originalCallback;
       }
 
-      return function () {
+      return function (){
         // module object is available as the last argument after 'module'
         // explicitly pushed to dependencies list
         var moduleObj = arguments[arguments.length - 1];
@@ -72,28 +72,26 @@ define([], function () {
         args.push(override || moduleObj.depModules[i]);
       }
       return args;
+    },
+
+    plugin = {
+      load : function (name, req, onload, config) {
+
+        require([name], function () {
+          var module = modulesRegistry[name];
+          if (!module) {
+            throw new Error('Module "' + name + '" is not registered.' +
+                            ' Please ensure that rinject plugin is loaded before any modules you try to resolve');
+          }
+          var factory = function (dependencyOverrides) {
+            var args = buildArgsArray(module, dependencyOverrides);
+            return module.factory.apply(this, args);
+          };
+
+          onload(factory);
+        });
+      }
     };
-
-
-  var plugin = {
-    load : function (name, req, onload, config) {
-
-      require([name], function () {
-        var module = modulesRegistry[name];
-        if (!module) {
-          throw new Error('Module "' + name + '" is not registered.' +
-            ' Please ensure that rinject plugin is loaded before any modules you try to resolve');
-        }
-        var factory = function (dependencyOverrides) {
-          var args = buildArgsArray(module, dependencyOverrides);
-          return module.factory.apply(this, args);
-        };
-
-        onload(factory);
-      });
-
-    }
-  };
 
   // replace global define with override
   define = defineOverride;
