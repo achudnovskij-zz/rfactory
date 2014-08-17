@@ -6,8 +6,8 @@ A tiny and synchronous mock injector plugin for requirejs
 Highlights
 =======
 * Synchonous and fast test execution. 
---* Doesn't require reloading modules
---* Declare rfactory!moduleUnderTest in top level define/require call and inject mocks synchronously
+  * Doesn't require reloading modules
+  * Declare rfactory!moduleUnderTest in top level define/require call and inject mocks synchronously
 * No configuration required. Just load rinject! before any module under test.
 * Minimal and straightforward implementation - Update it for your project need.
 
@@ -53,19 +53,20 @@ moduleUnderTest.doOperation();
 expect(mockDependency.doAction.calledOnce).to.be.equal(true);
 ```
 
+
 How it works
 =======
 Use the same basic idea as [testr](https://github.com/mattfysh/testr.js/tree/master):
 
 1. Patch 'define'. When any module is loaded it registers: 
---* Module name
---* Module factory
---* Original dependencies
+  * Module name
+  * Module factory
+  * Original dependencies
 
 2. When module with mocked dependencies is requested:
---* Get module factory with original dependencies from internal registry
---* Builds factory arguments array using provided dependency overrides and original dependencies when no override provided
---* Calls module factory and returns module 'instance'
+  * Get module factory with original dependencies from internal registry
+  * Builds factory arguments array using provided dependency overrides and original dependencies when no override provided
+  * Calls module factory and returns module 'instance'
 
 **And nothing more!**
 You can easily adjust it to your specific project.
