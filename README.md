@@ -13,44 +13,55 @@ Highlights
 
 Usage
 =======
-1. Load rfactory! plugin BEFORE any module-under-test
-  ```javascript
-    require(['domready!', 'rfactory!', 'spec/yourSpec'], function(){
-      mocha.run();
-    });
-    ```
-2. Implement your test as AMD module or wrap into require call. Reference your module-under-test using rfactory plugin
+* Load rfactory! plugin BEFORE any module-under-test
+
+```javascript
+require(['domready!', 'rfactory!', 'spec/yourSpec'], function(){
+  mocha.run();  
+});
+```
+
+* Implement your test as AMD module or wrap into require call. Reference your module-under-test using rfactory plugin
   Use [testr](https://github.com/mattfysh/testr.js/tree/master) if you don't plan to use require/define within tests
-  ```javascript
-    define(['sinon', 'rfactory!yourModule'], function (sinon, yourModuleFactory) {
-      describe('Your module')
-  ```
-3. Create Mock dependencies
-  ```javascript
+  
+```javascript
+define(['sinon', 'rfactory!yourModule'], function (sinon, yourModuleFactory) {
+  describe('Your module')
+```
+
+* Create Mock dependencies
+
+```
     var mockDependency = {
       doAction: sinon.stub()
     };
-    ```
-4. Get 'instance' of your module with replaced dependencies
-  ```javascript
-    var moduleUnderTest = yourModuleFactory({
-      'path/to/dependency' : mockDependency
-    });
-    ```
-5. Test!
-  ```javascript
+```
+
+* Get 'instance' of your module with replaced dependencies
+
+```
+var moduleUnderTest = yourModuleFactory({
+  'path/to/dependency' : mockDependency
+});
+```
+
+* Test!
+
+```
     moduleUnderTest.doOperation();
     
     expect(mockDependency.doAction.calledOnce).to.be.equal(true);
-  ```
+```
 
 How it works
 =======
 Use the same basic idea as [testr](https://github.com/mattfysh/testr.js/tree/master):
+
 1. Patch 'define'. When any module is loaded it registers: 
 * Module name
 * Module factory
 * Original dependencies
+
 2. When module with mocked dependencies is requested:
 * Get module factory with original dependencies from internal registry
 * Builds factory arguments array using provided dependency overrides and original dependencies when no override provided
