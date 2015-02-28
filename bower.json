@@ -11,5 +11,9 @@
   "dependencies": {
   },
   "devDependencies": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/achudnovskij/rfactory"
   }
 }
