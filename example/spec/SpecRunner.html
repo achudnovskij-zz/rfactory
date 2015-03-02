@@ -24,11 +24,14 @@
       paths: {
         'rfactory': '../../src/rfactory',
         'domready': '../lib/requirejs-2.1.14/domReady',
-        'spec': '../spec'
+        'spec': '../spec',
+
+        'handlebars': '../lib/handlebars-3.0.0/handlebars-v3.0.0',
+        'text': '../lib/text-2.0.14/text'
       }
     });
 
-    require(['domready!', 'rfactory!', 'spec/indexView'], function(){
+    require(['domready!', 'rfactory','spec/indexView', 'spec/indexView-functional'], function(){
       window.onLoadHandler();
     });
 
