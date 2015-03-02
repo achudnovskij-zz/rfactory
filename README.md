@@ -17,7 +17,7 @@ Usage
 ####1. Load rfactory! plugin BEFORE any module-under-test
 
 ```javascript
-require(['domready!', 'rfactory!', 'spec/yourSpec'], function(){
+require(['domready!', 'rfactory', 'spec/yourSpec'], function(){
   mocha.run();  
 });
 ```
