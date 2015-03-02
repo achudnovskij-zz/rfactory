@@ -8,6 +8,7 @@ Highlights
 * Synchonous and fast test execution. 
   * Doesn't require reloading modules
   * Declare rfactory!moduleUnderTest in top level define/require call and inject mocks synchronously
+  * Allows to replace dependencies anywhere in the dependency graph
 * No configuration required. Just load rinject! before any module under test.
 * Minimal and straightforward implementation - Update it for your project need.
 
