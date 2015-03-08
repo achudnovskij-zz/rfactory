@@ -1,7 +1,7 @@
 {
   "name": "rfactory",
   "description": "Simple, fast and synchronous dependency injection for requirejs",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": "achudnovskij"
   "main": "src/rfactory.js",
   "ignore": [

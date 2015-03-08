@@ -1,6 +1,8 @@
 define([], function () {
   'use strict';
   return {
-    handle : function () {}
+    handle : function (error) {
+
+    }
   };
 });

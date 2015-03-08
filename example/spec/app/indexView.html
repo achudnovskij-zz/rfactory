@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Articles List App</title>
+
+  <script type="text/javascript" src="../../lib/requirejs-2.1.14/require.js"></script>
+
+</head>
+
+<body>
+  <div class="container"></div>
+</body>
+
+
+<script type="text/javascript">
+  // Set up require configuration
+  require.config({
+    baseUrl: '../../src',
+    paths: {
+      'rfactory': '../../src/rfactory',
+      'domready': '../lib/requirejs-2.1.14/domReady',
+      'handlebars': '../lib/handlebars-3.0.0/handlebars-v3.0.0',
+      'text': '../lib/text-2.0.14/text'
+    }
+  });
+
+  // Set up test data and http service. Can be moved to separate modules to mock more complicated server behavior
+  var testData = [{
+      name: 'First Article',
+      author: 'First Author',
+      date: '01/01/2015'
+          }, {
+      name: 'Second Article',
+      author: 'Second Author',
+      date: '01/02/2015'
+    }],
+    httpMock = {
+      get: function (url, cb) {
+        cb(null, testData)
+      }
+    };
+
+  require(['domready!', 'rfactory'], function () {
+
+    // Initialize application with replaced 'http'
+    require(['rfactory!indexView'], function (viewModuleFactory) {
+      var ViewConstructor = viewModuleFactory({
+        $maxDepth: 0,
+        'httpUtil': httpMock
+      }),
+        view = new ViewConstructor().render(document.getElementsByClassName('container')[0]);
+    });
+  });
+</script>
+
+
+</html>
