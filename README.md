@@ -8,6 +8,7 @@ Highlights
 * Synchonous and fast test execution. 
   * Doesn't require reloading modules
   * Declare rfactory!moduleUnderTest in top level define/require call and inject mocks synchronously
+  * Allows to replace dependencies anywhere in the dependency graph
 * No configuration required. Just load rinject! before any module under test.
 * Minimal and straightforward implementation - Update it for your project need.
 
@@ -38,10 +39,11 @@ var mockDependency = {
 };
 ```
 
-####4. Get 'instance' of your module with replaced dependencies
+####4. Get 'instance' of your module with replaced dependencies (!New: now both direct and indirect dependencies)
 
 ```javascript
 var moduleUnderTest = yourModuleFactory({
+  $maxDepth : 3, // options: how deep to look in dependency chain. Default: 1, $maxDepth : 0 - no limit
   'path/to/dependency' : mockDependency
 });
 ```
