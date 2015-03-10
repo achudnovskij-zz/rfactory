@@ -2,13 +2,13 @@
   "name": "rfactory",
   "description": "Simple, fast and synchronous dependency injection for requirejs",
   "version": "1.1.0",
-  "author": "achudnovskij"
+  "author": "achudnovskij",
   "main": "src/rfactory.js",
   "ignore": [
     ".jshintrc",
     "**/*.txt"
   ],
-  keywords: ['requirejs', 'dependency-injection'],
+  "keywords": ["requirejs", "dependency-injection"],
   "dependencies": {
   },
   "devDependencies": {
